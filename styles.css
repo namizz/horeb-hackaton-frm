@@ -228,3 +228,8 @@ button:hover {
     padding: 14px;
   }
 }
+
+button:disabled {
+  cursor: not-allowed;
+  background: linear-gradient(135deg, #999, #666) !important;
+}

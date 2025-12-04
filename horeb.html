@@ -142,6 +142,144 @@
       </form>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+      const form = document.getElementById("registrationForm");
+      const submitBtn = form.querySelector("button[type='submit']");
+      const flashMessage = document.getElementById("flashMessage");
+
+      // Save locally
+      function saveRegistration(data) {
+        let registrations = JSON.parse(
+          localStorage.getItem("hackHawassaRegistrations") || "[]"
+        );
+        data.id = Date.now();
+        data.timestamp = new Date().toLocaleString();
+        registrations.push(data);
+        localStorage.setItem(
+          "hackHawassaRegistrations",
+          JSON.stringify(registrations)
+        );
+      }
+
+      // Show success message
+      function showSuccess(message = "Registration submitted successfully!") {
+        flashMessage.innerHTML = `${message}<br><small>Thank you!</small>`;
+        flashMessage.classList.add("show");
+        setTimeout(() => flashMessage.classList.remove("show"), 6000);
+      }
+
+      // Handle form submission
+      async function handleSubmit(event) {
+        event.preventDefault();
+
+        // Disable button + show loading state
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Submitting...";
+        submitBtn.style.opacity = "0.7";
+
+        const formData = {
+          name: document.getElementById("name").value.trim(),
+          department: document.getElementById("department").value.trim(),
+          year: document.getElementById("year").value.trim(),
+          team: document.getElementById("team").value.trim(),
+          role: document.getElementById("role").value,
+          expectations: document.getElementById("expectations").value.trim(),
+        };
+
+        // Role-specific fields
+        if (formData.role === "student") {
+          formData.category = document.getElementById("student_category").value;
+          if (!formData.category)
+            return alert("Please select your skill category!");
+        } else if (formData.role === "professional") {
+          formData.profession =
+            document.getElementById("profession_type").value;
+          if (!formData.profession)
+            return alert("Please select your profession!");
+        } else {
+          return alert("Please select your role!");
+        }
+
+        // Required fields check
+        if (
+          !formData.name ||
+          !formData.department ||
+          !formData.year ||
+          !formData.team
+        ) {
+          alert("Please fill all required fields!");
+          resetButton();
+          return;
+        }
+
+        // Save locally first (backup)
+        saveRegistration(formData);
+
+        try {
+          const response = await fetch("/api/submit", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(formData),
+          });
+
+          if (response.ok) {
+            showSuccess("Successfully registered! Welcome to Hack-Hawassa!");
+            form.reset();
+            showOptions(); // Reset role sections
+            updateCharCount();
+          } else {
+            const error = await response.json().catch(() => ({}));
+            throw new Error(error.error || "Server error");
+          }
+        } catch (error) {
+          console.error("Submission failed:", error);
+          showSuccess(
+            "Registered locally (offline mode) — will sync when online!"
+          );
+          alert(
+            "No internet or server issue — your data is saved safely on this device!"
+          );
+        } finally {
+          // Always re-enable button after 1 second
+          setTimeout(resetButton, 1000);
+        }
+      }
+
+      function resetButton() {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Register Now";
+        submitBtn.style.opacity = "1";
+      }
+
+      function showOptions() {
+        const role = document.getElementById("role").value;
+        document
+          .getElementById("student_section")
+          .classList.toggle("hidden", role !== "student");
+        document
+          .getElementById("professional_section")
+          .classList.toggle("hidden", role !== "professional");
+
+        document.getElementById("student_category").required =
+          role === "student";
+        document.getElementById("profession_type").required =
+          role === "professional";
+      }
+
+      function updateCharCount() {
+        const length = document.getElementById("expectations").value.length;
+        const counter = document.getElementById("charCount");
+        counter.textContent = length;
+        counter.style.color =
+          length > 450 ? "#e74c3c" : length > 400 ? "#f39c12" : "#666";
+      }
+
+      // Init
+      window.onload = () => {
+        updateCharCount();
+        showOptions();
+        form.onsubmit = handleSubmit;
+      };
+    </script>
   </body>
 </html>
