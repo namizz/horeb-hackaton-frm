@@ -1,0 +1,9 @@
+{
+  "rewrites": [{ "source": "/api/submit", "destination": "/api/submit.js" }],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [{ "key": "Access-Control-Allow-Origin", "value": "*" }]
+    }
+  ]
+}

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hack-Hawassa Registration</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="background-overlay"></div>
+
+    <div class="container">
+      <div class="header">
+        <h1>Hack-Hawassa Registration</h1>
+        <div class="subtitle">
+          <b>HOREB DS</b> <br />
+          DIGITAL MISSION<br />
+          ETERNAL VISION
+        </div>
+      </div>
+
+      <!-- Success Message -->
+      <div id="flashMessage" class="flash-message">
+        Registration submitted successfully!<br />
+        <small>Data saved locally. In production, connect to a backend.</small>
+      </div>
+
+      <form id="registrationForm">
+        <div class="form-group">
+          <label class="required">Full Name:</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            required
+            placeholder="Enter your full name"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="required">Department:</label>
+          <input
+            type="text"
+            id="department"
+            name="department"
+            required
+            placeholder="e.g., Computer Science"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="required">Year:</label>
+          <input
+            type="text"
+            id="year"
+            name="year"
+            required
+            placeholder="e.g., 3rd year"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="required">Team:</label>
+          <input
+            type="text"
+            id="team"
+            name="team"
+            required
+            placeholder="e.g., Horeb"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="required">Register As:</label>
+          <select name="role" id="role" onchange="showOptions()" required>
+            <option value="">-- Select Your Role --</option>
+            <option value="student">Student</option>
+            <option value="professional">Professional</option>
+          </select>
+        </div>
+
+        <!-- STUDENT SECTION -->
+        <div id="student_section" class="role-section hidden">
+          <label class="required">Skill Category:</label>
+          <select name="student_category" id="student_category">
+            <option value="">-- Select Your Skill --</option>
+            <option value="Video - Cinematography">
+              Video - Cinematography
+            </option>
+            <option value="Video - Editing">Video - Editing</option>
+            <option value="Video - Acting">Video - Acting</option>
+            <option value="Video - Writing">Video - Writing</option>
+            <option value="Song - Mixing">Song - Mixing</option>
+            <option value="Song - Writing">Song - Writing</option>
+            <option value="Song - Melody">Song - Melody</option>
+            <option value="Developing - Front-end">
+              Developing - Front-end
+            </option>
+            <option value="Developing - Back-end">Developing - Back-end</option>
+            <option value="Developing - Full stack">
+              Developing - Full Stack
+            </option>
+          </select>
+        </div>
+
+        <!-- PROFESSIONAL SECTION -->
+        <div id="professional_section" class="role-section hidden">
+          <label class="required">Profession:</label>
+          <select name="profession_type" id="profession_type">
+            <option value="">-- Select Your Profession --</option>
+            <option value="Production">Production</option>
+            <option value="Full Stack Developer">Full Stack Developer</option>
+            <option value="Song Maker">Song Maker</option>
+          </select>
+        </div>
+
+        <!-- EXPECTATIONS -->
+        <div class="form-group">
+          <label
+            >What do you expect from this program?
+            <span class="optional">(Optional)</span></label
+          >
+          <textarea
+            name="expectations"
+            id="expectations"
+            placeholder="Please share your expectations..."
+            maxlength="500"
+            oninput="updateCharCount()"
+          ></textarea>
+          <div class="char-count">
+            <span id="charCount">0</span>/500 characters
+          </div>
+        </div>
+
+        <div>
+          <h5 style="color: #e74c3c">
+            BE SURE THAT YOU PAID 300 BIRR IN THIS CBE ACCOUNT "1000346125717"
+          </h5>
+        </div>
+        <br />
+        <button type="submit">Register Now</button>
+      </form>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
