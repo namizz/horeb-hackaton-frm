@@ -14,8 +14,8 @@
         <h1>Hack-Hawassa Registration</h1>
         <div class="subtitle">
           <b>HOREB DS</b> <br />
-          DIGITAL MISSION<br />
-          ETERNAL VISION
+          💻DIGITAL MISSION<br />
+          ♾️ETERNAL VISION
         </div>
       </div>
 
@@ -34,6 +34,18 @@
             name="name"
             required
             placeholder="Enter your full name"
+          />
+        </div>
+        <div class="form-group">
+          <label class="required">Phone Number:</label>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            required
+            placeholder="e.g., 0912345678"
+            pattern="[0-9]{10}"
+            title="Enter a valid 10-digit phone number"
           />
         </div>
 
@@ -134,8 +146,12 @@
 
         <div>
           <h5 style="color: #e74c3c">
-            BE SURE THAT YOU PAID 300 BIRR IN THIS CBE ACCOUNT "1000346125717"
+            ⚠️BE SURE THAT YOU PAID 300 BIRR IN THIS CBE ACCOUNT⚠️<b
+              >"1000679267683"</b
+            >
+            <br />
           </h5>
+          <h5>DON'T FORGET TO SEND THE SCEENSHOT TO LEADERS</h5>
         </div>
         <br />
         <button type="submit">Register Now</button>
@@ -179,6 +195,7 @@
 
         const formData = {
           name: document.getElementById("name").value.trim(),
+          phone: document.getElementById("phone").value.trim(),
           department: document.getElementById("department").value.trim(),
           year: document.getElementById("year").value.trim(),
           team: document.getElementById("team").value.trim(),
@@ -205,7 +222,8 @@
           !formData.name ||
           !formData.department ||
           !formData.year ||
-          !formData.team
+          !formData.team ||
+          !formData.phone
         ) {
           alert("Please fill all required fields!");
           resetButton();

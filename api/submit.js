@@ -20,14 +20,16 @@ export default async function handler(req, res) {
     const sheets = google.sheets({ version: "v4", auth });
 
     const row = [
-      data.timestamp || new Date().toLocaleString("en-GB"),
       data.name || "",
+      data.phone || "",
       data.department || "",
       data.year || "",
       data.team || "",
       data.role || "",
       data.category || data.profession || "",
       data.expectations || "",
+      "",
+      data.timestamp || new Date().toLocaleString("en-GB"),
     ];
 
     await sheets.spreadsheets.values.append({
